@@ -1,0 +1,63 @@
+@import "variables";
+@import "mixins";
+
+*, *:after, *:before {
+    margin: 0;
+    padding: 0;
+    @include border-box;
+    }
+
+span {
+  display: block;
+  background: #c2f0ff;
+  padding: 1em 0;
+  text-align: center;
+}
+
+//make images fluid
+img {
+  width: auto;
+  max-width: 100%;
+  height: auto !important;
+}
+
+//rules to make sure wrapper element behaves
+.wrapper {
+  width: 100%;
+  margin: 0 auto;
+}
+
+//all our row elements do is contain the columns, making sure that groups of columns clear each other properly
+.wrapper:after,
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+//target and style wide range of column classes
+[class*='column-'] {
+  float: left;
+  padding: 1em;
+  width: 100%;
+  min-height: 1px;
+}
+
+.wrapper,
+.row {
+    @extend %clearfix;
+}
+
+
+@media #{$breakpoint-medium} {
+  .wrapper {
+        width: 95%;
+        max-width: $grid-max-width;
+        }
+
+        @for $i from 1 through $grid-columns {
+          .column-#{$i} {
+            width: 100% / $grid-columns * $i;
+          }
+        }
+}
